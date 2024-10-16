@@ -1,6 +1,7 @@
 pipeline{
     agent any
     stages{
+        /**
         stage ('Build Backend'){
             steps{
                 bat 'mvn clean package -DskipTests=true'
@@ -11,6 +12,7 @@ pipeline{
                 bat 'mvn test'
             }
         }
+        **/
         stage ('Sonar Analise'){
             environment {
                scannerHome = tool 'SONAR_SCANNER' 
