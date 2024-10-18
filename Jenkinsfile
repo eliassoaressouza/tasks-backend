@@ -27,8 +27,9 @@ pipeline{
         }
         stage ('Qualit Gate'){
             steps{
-            timeout(time: 1, unit: 'MINUTES')
-            waitForQualityGate abortPipeline: false, credentialsId: 'SonarToken'
+                sleep(20)
+                timeout(time: 1, unit: 'MINUTES')
+                waitForQualityGate abortPipeline: false, credentialsId: 'SonarToken'
             }
         }
     }
