@@ -19,13 +19,12 @@ pipeline{
             }
             steps{
                 withSonarQubeEnv(credentialsId: 'SonarToken', installationName: 'SONAR_LOCAL'){
-                    
-                    bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=DeployBack -Dsonar.host.url=http://192.168.0.13:9001  -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/src/test/**,**/model/**,**Aplication.java"
-                    echo "scannerHome: ${scannerHome}"
+
+                    bat '''mvn clean verify sonar:sonar -Dsonar.projectKey=DeployBack -Dsonar.projectName='DeployBack' -Dsonar.host.url=http://localhost:9001''' 
+                    echo 'SonarQube Analysis Completed'
                 }
             }
         }
     }
 }
-
 
