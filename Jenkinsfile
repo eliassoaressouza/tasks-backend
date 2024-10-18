@@ -19,10 +19,16 @@ pipeline{
             }
             steps{
                 withSonarQubeEnv(credentialsId: 'SonarToken', installationName: 'SONAR_LOCAL'){
-
                     bat '''mvn clean verify sonar:sonar -Dsonar.projectKey=DeployBack -Dsonar.projectName='DeployBack' -Dsonar.host.url=http://localhost:9001  -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/src/test/**,**/model/**,**Aplication.java''' 
                     echo 'SonarQube Analysis Completed'
+                
                 }
+            }
+        }
+        stage ('Qualit Gate'){
+            steps{
+            timeout(time: 1, unit: 'MINUTES')
+            waitForQualityGate abortPipeline: false, credentialsId: 'SonarToken'
             }
         }
     }
